@@ -1,105 +1,42 @@
-# Brand Taxonomy & Search-Term Audit
-### Does "Dove" mean soap — or something else?
+# Does "Dove" Mean Soap?
+### A Brand Search-Term Audit — YouTube · 20 Terms · 289 Videos
+
+Brand monitoring tools count YouTube mentions by searching for keywords. But what if the keyword is ambiguous? **"Dove"** returns soap ads, Dove Cameron music videos, bird footage, and chocolate commercials. Without auditing which terms actually return brand content, a team could be measuring noise as signal.
+
+Public data · YouTube Data API v3 · PostgreSQL / SQL analysis · Personal portfolio project
+
+![Slide 1](06_executive_brief/slides/slide_01.png)
 
 ---
 
 ## The Problem
 
-Brand monitoring tools count YouTube mentions by searching for keywords.
-But what if the keyword is ambiguous?
+Brand teams search YouTube for "dove" and count everything as a brand mention. At 0.53 precision, the bare term is a coin flip — roughly half the results have nothing to do with Dove the beauty brand. On a high-volume campaign, that means hundreds of phantom mentions per week and inflated performance numbers.
 
-**"Dove"** returns four completely different things:
-- Dove soap and beauty products
-- Dove Cameron (pop star)
-- Dove birds (wildlife videos)
-- Dove chocolate
+Full framing in [`01_business_problem/problem_statement.md`](01_business_problem/problem_statement.md).
 
-If you search "dove" and count everything as a brand mention, 47% of your
-data is wrong. This project audits which search terms actually return brand
-content — and which ones are noise.
+![Slide 2](06_executive_brief/slides/slide_02.png)
 
 ---
 
-## What I Built
+## Methodology
 
-A full audit pipeline: API data collection → PostgreSQL storage → manual
-labeling → precision analysis → actionable recommendations.
+![Slide 3](06_executive_brief/slides/slide_03.png)
 
-| Phase | What happened |
-|---|---|
-| 0 | Test search confirmed Dove ambiguity problem |
-| 1 | Defined business problem and labeling rules |
-| 2 | Fetched 289 YouTube Shorts via YouTube Data API v3 |
-| 3 | Loaded raw data into PostgreSQL (raw schema) |
-| 4 | Labeled all 289 videos: BRAND / CELEBRITY / BIRD / OTHER |
-| 5 | Built clean schema with term_tier classification |
-| 6 | Calculated precision per search term |
-| 7 | Taxonomy playbook: keep / review / drop recommendations |
-| 8 | Executive brief for brand/media teams |
+1. **Define** — 20 search terms across 4 tiers: brand core, campaign, misspellings, ambiguous
+2. **Collect** — YouTube Data API v3, top 15 Shorts per term → 289 videos total
+3. **Store** — PostgreSQL raw schema
+4. **Label** — each video: BRAND / CELEBRITY / BIRD / OTHER
+5. **Score** — precision = brand results ÷ total results per term
+6. **Recommend** — keep / review / drop each term
+
+Data collection script in [`02_data/fetch_data.py`](02_data/fetch_data.py). Labeling rules in [`02_data/labeling_guideline.md`](02_data/labeling_guideline.md).
 
 ---
 
-## Key Finding
+## Precision Results — All 20 Terms
 
-| Metric | Result |
-|---|---|
-| Total videos audited | 289 |
-| Brand-relevant results | 229 (79%) |
-| Noise | 60 (21%) |
-| Terms with perfect precision (1.0) | 13 of 20 |
-| Terms with zero brand results | 4 of 20 |
-
-**The bare term "dove" scores 0.53 precision.**
-Including it in brand monitoring is a coin flip.
-
----
-
-## Repo Structure
-
-```
-brand-search-term-audit/
-├── 01_business_problem/
-│   └── problem_statement.md      # Why this matters
-├── 02_data/
-│   ├── fetch_data.py             # YouTube API collector
-│   ├── raw_results.csv           # 289 rows from API
-│   ├── labeling_guideline.md     # Labeling rules
-│   └── labeled_results.csv      # Labels applied
-├── 03_sql/
-│   ├── 01_create_tables.sql      # Schema setup
-│   ├── 02_load_raw.sql           # Data load
-│   └── 03_precision_analysis.sql # Core analysis query
-├── 05_taxonomy_playbook/
-│   └── taxonomy_playbook.md      # Keep/drop/add recommendations
-├── 06_executive_brief/
-│   └── executive_brief.md        # Summary for brand teams
-└── test_search.py                # Phase 0 proof of concept
-```
-
----
-
-## Tech Stack
-
-- **Python** — YouTube Data API v3, data collection
-- **PostgreSQL** — raw + clean schema, precision calculations
-- **SQL** — labeling, tier classification, aggregation
-- **Git** — version controlled, phase-by-phase commits
-
----
-
-## Presentation
-
-| | | |
-|---|---|---|
-| ![Slide 1](06_executive_brief/slides/slide_01.png) | ![Slide 2](06_executive_brief/slides/slide_02.png) | ![Slide 3](06_executive_brief/slides/slide_03.png) |
-| ![Slide 4](06_executive_brief/slides/slide_04.png) | ![Slide 5](06_executive_brief/slides/slide_05.png) | ![Slide 6](06_executive_brief/slides/slide_06.png) |
-| ![Slide 7](06_executive_brief/slides/slide_07.png) | | |
-
-📄 [Download PDF](06_executive_brief/slides/dove-brand-search-audit.pdf)
-
----
-
-## Precision Results
+![Slide 4](06_executive_brief/slides/slide_04.png)
 
 | Search Term | Tier | Precision |
 |---|---|---|
@@ -122,3 +59,73 @@ brand-search-term-audit/
 | dove bird | ambiguous | 0.00 |
 | dove chocolate | ambiguous | 0.00 |
 | dove cameron | ambiguous | 0.00 |
+
+Full precision query in [`03_sql/03_precision_analysis.sql`](03_sql/03_precision_analysis.sql).
+
+---
+
+## Key Finding
+
+![Slide 5](06_executive_brief/slides/slide_05.png)
+
+**The bare term "dove" scores 0.53 precision.** Including it in brand monitoring is a coin flip — 1 in 2 results is not the brand, producing roughly a 47% overstatement in mention counts.
+
+13 product-specific terms (dove soap, dove shampoo, dove deodorant, and 10 others) returned zero noise — precision 1.0 across the board.
+
+---
+
+## Recommendations
+
+![Slide 6](06_executive_brief/slides/slide_06.png)
+
+**Keep (13 terms, precision 1.0)** — All brand_core and campaign terms. These are clean signals with zero noise.
+
+**Drop (5 terms)** — dove cameron (0.00), dove bird (0.00), dove chocolate (0.00), doove (0.20), and the bare term "dove" (0.53). Keeping them inflates mention counts with irrelevant content.
+
+**Add (5 terms not yet monitored)** — dove body lotion, dove baby wash, dove men+care, dove deep moisture, dove antiperspirant.
+
+Full playbook in [`05_taxonomy_playbook/taxonomy_playbook.md`](05_taxonomy_playbook/taxonomy_playbook.md).
+
+---
+
+## The Verdict
+
+![Slide 7](06_executive_brief/slides/slide_07.png)
+
+Product-specific terms always win. The fix is a one-time audit of the term list — one afternoon of work with a permanent impact on data quality.
+
+**Full executive brief:** [`06_executive_brief/executive_brief.md`](06_executive_brief/executive_brief.md)
+**Full presentation deck:** [`06_executive_brief/slides/dove-brand-search-audit.pdf`](06_executive_brief/slides/dove-brand-search-audit.pdf)
+
+---
+
+## Repo Structure
+
+```
+brand-search-term-audit/
+├── 01_business_problem/
+│   └── problem_statement.md
+├── 02_data/
+│   ├── fetch_data.py
+│   ├── raw_results.csv
+│   ├── labeling_guideline.md
+│   └── labeled_results.csv
+├── 03_sql/
+│   ├── 01_create_tables.sql
+│   ├── 02_load_raw.sql
+│   └── 03_precision_analysis.sql
+├── 05_taxonomy_playbook/
+│   └── taxonomy_playbook.md
+├── 06_executive_brief/
+│   ├── executive_brief.md
+│   └── slides/
+│       ├── slide_01.png … slide_07.png
+│       └── dove-brand-search-audit.pdf
+└── test_search.py
+```
+
+**Tools:** Python · YouTube Data API v3 · PostgreSQL · SQL · Git
+
+---
+
+*Tarif Hassan — [LinkedIn](https://linkedin.com/in/tarifhassan27)*
