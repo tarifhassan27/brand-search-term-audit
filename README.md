@@ -5,7 +5,7 @@ Brand monitoring tools count YouTube mentions by searching for keywords. But wha
 
 Public data · YouTube Data API v3 · PostgreSQL / SQL analysis · Personal portfolio project
 
-![Slide 1](06_executive_brief/slides/slide_01.png)
+<p align="center"><img src="06_executive_brief/slides/slide_01.png" width="480"></p>
 
 ---
 
@@ -15,13 +15,13 @@ Brand teams search YouTube for "dove" and count everything as a brand mention. A
 
 Full framing in [`01_business_problem/problem_statement.md`](01_business_problem/problem_statement.md).
 
-![Slide 2](06_executive_brief/slides/slide_02.png)
+<p align="center"><img src="06_executive_brief/slides/slide_02.png" width="480"></p>
 
 ---
 
 ## Methodology
 
-![Slide 3](06_executive_brief/slides/slide_03.png)
+<p align="center"><img src="06_executive_brief/slides/slide_03.png" width="480"></p>
 
 1. **Define** — 20 search terms across 4 tiers: brand core, campaign, misspellings, ambiguous
 2. **Collect** — YouTube Data API v3, top 15 Shorts per term → 289 videos total
@@ -36,7 +36,7 @@ Data collection script in [`02_data/fetch_data.py`](02_data/fetch_data.py). Labe
 
 ## Precision Results — All 20 Terms
 
-![Slide 4](06_executive_brief/slides/slide_04.png)
+<p align="center"><img src="06_executive_brief/slides/slide_04.png" width="480"></p>
 
 | Search Term | Tier | Precision |
 |---|---|---|
@@ -66,7 +66,7 @@ Full precision query in [`03_sql/03_precision_analysis.sql`](03_sql/03_precision
 
 ## Key Finding
 
-![Slide 5](06_executive_brief/slides/slide_05.png)
+<p align="center"><img src="06_executive_brief/slides/slide_05.png" width="480"></p>
 
 **The bare term "dove" scores 0.53 precision.** Including it in brand monitoring is a coin flip — 1 in 2 results is not the brand, producing roughly a 47% overstatement in mention counts.
 
@@ -76,7 +76,7 @@ Full precision query in [`03_sql/03_precision_analysis.sql`](03_sql/03_precision
 
 ## Recommendations
 
-![Slide 6](06_executive_brief/slides/slide_06.png)
+<p align="center"><img src="06_executive_brief/slides/slide_06.png" width="480"></p>
 
 **Keep (13 terms, precision 1.0)** — All brand_core and campaign terms. These are clean signals with zero noise.
 
@@ -90,7 +90,7 @@ Full playbook in [`05_taxonomy_playbook/taxonomy_playbook.md`](05_taxonomy_playb
 
 ## The Verdict
 
-![Slide 7](06_executive_brief/slides/slide_07.png)
+<p align="center"><img src="06_executive_brief/slides/slide_07.png" width="480"></p>
 
 Product-specific terms always win. The fix is a one-time audit of the term list — one afternoon of work with a permanent impact on data quality.
 
