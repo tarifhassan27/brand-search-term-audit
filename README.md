@@ -87,6 +87,18 @@ brand-search-term-audit/
 
 ---
 
+## Presentation
+
+| | | |
+|---|---|---|
+| ![Slide 1](06_executive_brief/slides/slide_01.png) | ![Slide 2](06_executive_brief/slides/slide_02.png) | ![Slide 3](06_executive_brief/slides/slide_03.png) |
+| ![Slide 4](06_executive_brief/slides/slide_04.png) | ![Slide 5](06_executive_brief/slides/slide_05.png) | ![Slide 6](06_executive_brief/slides/slide_06.png) |
+| ![Slide 7](06_executive_brief/slides/slide_07.png) | | |
+
+📄 [Download PDF](06_executive_brief/slides/dove-brand-search-audit.pdf)
+
+---
+
 ## Precision Results
 
 | Search Term | Tier | Precision |
