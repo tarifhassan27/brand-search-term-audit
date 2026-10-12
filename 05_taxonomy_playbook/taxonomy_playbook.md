@@ -1,16 +1,16 @@
 # Dove Brand Search-Term Taxonomy Playbook
 
 ## Summary
-Audited 20 YouTube search terms across 289 Shorts.
-13 terms returned 100% brand-relevant results.
-4 ambiguous terms returned 0% brand results and should be dropped immediately.
+Audited 20 YouTube search terms across 289 results (videos under 4 minutes via `videoDuration=short`).
+14 terms returned 100% brand-relevant results in the top 15.
+3 ambiguous terms returned 0% brand results and should be dropped immediately.
 
 ---
 
 ## Term Recommendations
 
-### KEEP — Precision 1.0 (13 terms)
-These terms return only Dove brand content. No noise.
+### KEEP — Precision 1.0 (14 terms)
+These terms returned no noise in the top 15 results.
 
 | Term | Tier | Precision |
 |---|---|---|
@@ -27,16 +27,17 @@ These terms return only Dove brand content. No noise.
 | dove realbody | campaign | 1.0 |
 | dove care | campaign | 1.0 |
 | dov soap | misspelling | 1.0 |
+| dove shampo | misspelling | 1.0 |
 
-### REVIEW — Precision 0.20-0.93 (2 terms)
-Mostly brand but with noise. Monitor or refine.
+### REVIEW — Precision 0.53–0.93 (2 terms)
+Mostly brand but with noise. Monitor or refine before including in counts.
 
 | Term | Tier | Precision | Issue |
 |---|---|---|---|
-| dove sop | misspelling | 0.93 | 1 stray result - acceptable |
-| dove | ambiguous | 0.53 | Half results are birds/celebrity - risky to include |
+| dove sop | misspelling | 0.93 | 1 stray result — acceptable with monitoring |
+| dove | ambiguous | 0.53 | 47% of results are off-brand — risky to include unfiltered |
 
-### DROP — Precision 0.0-0.20 (5 terms)
+### DROP — Precision 0.0–0.20 (4 terms)
 These terms pollute brand mention counts with irrelevant content.
 
 | Term | Tier | Precision | Why |
@@ -61,5 +62,10 @@ Terms not in the original set that would likely return brand content:
 
 ## Key Finding
 The bare term "dove" is the riskiest term in any brand monitoring setup.
-At precision 0.53, including it inflates brand mention counts by ~47% with noise.
+At precision 0.53, 47% of its results are noise — not the Dove beauty brand.
 Always use product-specific terms instead.
+
+## Limitation
+Videos were labeled by title only. Title-based labeling can misclassify results
+where the title is ambiguous but the video content is clearly brand-relevant (or
+vice versa). A tool that analyzes video content directly would close this gap.

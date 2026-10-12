@@ -2,7 +2,7 @@
 
 **Prepared by:** Tarif Hassan
 **Date:** October 2026
-**Scope:** 20 search terms · 289 YouTube Shorts · Brand: Dove (Unilever)
+**Scope:** 20 search terms · 289 results · Brand: Dove (Unilever)
 
 ---
 
@@ -21,8 +21,9 @@ terms actually return brand content, a team could be measuring noise as signal.
 
 1. Built a structured list of 20 search terms across 4 tiers: brand core,
    campaign, misspellings, and ambiguous terms.
-2. Fetched the top 15 YouTube Shorts per term via the YouTube Data API (289 videos).
-3. Labeled each video as BRAND, CELEBRITY, BIRD, or OTHER.
+2. Fetched the top 15 results per term via the YouTube Data API using
+   `videoDuration=short` (videos under 4 minutes) — 289 results total.
+3. Labeled each result by title: BRAND, CELEBRITY, BIRD, or OTHER.
 4. Calculated precision per term: what % of results were actually Dove the brand.
 
 ---
@@ -31,7 +32,7 @@ terms actually return brand content, a team could be measuring noise as signal.
 
 | Result | Count |
 |---|---|
-| Total videos audited | 289 |
+| Total results audited | 289 |
 | Brand-relevant (BRAND) | 229 (79%) |
 | Noise (CELEBRITY + BIRD + OTHER) | 60 (21%) |
 
@@ -39,9 +40,9 @@ terms actually return brand content, a team could be measuring noise as signal.
 
 | Term | Precision | Verdict |
 |---|---|---|
-| dove soap, dove shampoo, dove deodorant (+ 10 more) | 1.00 | Keep |
-| dove sop (misspelling) | 0.93 | Keep |
-| dove | 0.53 | Risky — drop or isolate |
+| dove soap, dove shampoo, dove deodorant (+ 11 more) | 1.00 | Keep |
+| dove sop (misspelling) | 0.93 | Review |
+| dove | 0.53 | Risky — flag or isolate |
 | doove (misspelling) | 0.20 | Drop |
 | dove cameron, dove bird, dove chocolate | 0.00 | Drop immediately |
 
@@ -49,13 +50,13 @@ terms actually return brand content, a team could be measuring noise as signal.
 
 ## Recommendations
 
-**Drop 5 terms** that return zero or near-zero brand content. Keeping them
-inflates mention counts with irrelevant videos.
+**Keep 14 terms** with precision 1.0 — no noise in the top 15 results.
 
-**Keep 13 terms** with precision 1.0 — these are clean signals.
+**Review 2 terms** — `dove sop` (0.93) and `dove` (0.53). Flag these; do not
+include unfiltered in brand mention counts.
 
-**Flag "dove" as a standalone term.** At 0.53 precision, it is a coin flip.
-Any report that includes it without filtering is overstating brand mentions.
+**Drop 4 terms** that return zero or near-zero brand content: dove cameron,
+dove bird, dove chocolate, doove.
 
 **Add 5 product-specific terms** not currently monitored: dove body lotion,
 dove baby wash, dove men+care, dove deep moisture, dove antiperspirant.
@@ -65,8 +66,15 @@ dove baby wash, dove men+care, dove deep moisture, dove antiperspirant.
 ## Business Impact
 
 If a team runs brand monitoring with all 20 terms unfiltered, 21% of what
-they count as "brand mentions" is noise. On a high-volume campaign this could
-mean hundreds of phantom mentions per week — leading to inflated performance
-numbers and misallocated budget.
+they count as "brand mentions" is noise — 47% of "dove" results alone are
+off-brand. Fixing the term list takes one afternoon. The impact on data
+quality is permanent.
 
-Fixing the term list takes one hour. The impact on data quality is permanent.
+---
+
+## Limitations
+
+Videos were labeled by title only — no video content was watched. Title-based
+labeling can misclassify results where the title is ambiguous but the content
+is clearly brand-relevant (or vice versa). A tool that analyzes video content
+directly would close this gap.
