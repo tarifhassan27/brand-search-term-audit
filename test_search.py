@@ -1,6 +1,6 @@
 import requests
 
-API_KEY = "AIzaSyAIPHX0A-4FUDZorTV1Z_HRmhaqBmbwoxg"
+API_KEY = os.environ.get("YOUTUBE_API_KEY")
 QUERY   = "dove"
 MAX_RESULTS = 15
 
