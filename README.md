@@ -73,7 +73,7 @@ Full precision query in [`03_sql/03_precision_analysis.sql`](03_sql/03_precision
 
 **The bare term "dove" scores 0.53 precision.** Including it in brand monitoring is a coin flip — 47% of its results are noise, not the brand.
 
-14 product-specific terms (dove soap, dove shampoo, dove deodorant, and 11 others) returned no noise in the top 15 results — precision 1.0 across the board.
+14 terms across brand_core, campaign, and misspelling tiers returned no noise in the top 15 results — precision 1.0 across the board.
 
 ---
 
@@ -97,7 +97,7 @@ Full playbook in [`05_taxonomy_playbook/taxonomy_playbook.md`](05_taxonomy_playb
 
 <p align="center"><img src="06_executive_brief/slides/slide_07.png" width="480"></p>
 
-Product-specific terms consistently outperform in this sample. The fix is a one-time audit of the term list — one afternoon of work with a permanent impact on data quality.
+Specific terms consistently outperform in this sample. The fix is a one-time audit of the term list — one afternoon of work with a significant impact on data quality.
 
 **Limitation:** Videos were labeled by title only. Title-based labeling can misclassify results where the title is ambiguous but the content is clearly brand-relevant (or vice versa). A tool that analyzes video content directly would close this gap.
 
