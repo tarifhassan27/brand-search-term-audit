@@ -2,7 +2,7 @@ import requests
 import csv
 import time
 
-API_KEY = "AIzaSyAIPHX0A-4FUDZorTV1Z_HRmhaqBmbwoxg"
+API_KEY = os.environ.get("YOUTUBE_API_KEY")
 
 SEARCH_TERMS = [
     # Brand core
