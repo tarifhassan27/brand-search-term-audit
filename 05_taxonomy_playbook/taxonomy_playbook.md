@@ -63,7 +63,7 @@ Terms not in the original set that would likely return brand content:
 ## Key Finding
 The bare term "dove" is the riskiest term in any brand monitoring setup.
 At precision 0.53, 47% of its results are noise — not the Dove beauty brand.
-Always use product-specific terms instead.
+Use specific terms (product names, campaign terms) instead of bare brand names.
 
 ## Limitation
 Videos were labeled by title only. Title-based labeling can misclassify results

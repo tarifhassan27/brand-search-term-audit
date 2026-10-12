@@ -68,7 +68,7 @@ dove baby wash, dove men+care, dove deep moisture, dove antiperspirant.
 If a team runs brand monitoring with all 20 terms unfiltered, 21% of what
 they count as "brand mentions" is noise — 47% of "dove" results alone are
 off-brand. Fixing the term list takes one afternoon. The impact on data
-quality is permanent.
+quality is significant and long-lasting.
 
 ---
 
